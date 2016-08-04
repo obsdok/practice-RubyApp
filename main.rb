@@ -6,8 +6,7 @@ Config.new do |app|
 end
 
 access = Access.new()
-Config::User.login = access.login
-Config::User.role = access.role
+
 
 #Config::User.login = 'obsidok'
 #Config::User.role = 'admin'
