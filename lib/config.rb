@@ -20,7 +20,6 @@ class Config
 
         def init
             Mongo::Logger.logger.level = Logger::WARN
-            User.new
             Collections.new
         end
     end
@@ -30,6 +29,9 @@ class Config
         class << self
 
             def new
+                unless @instance
+                    yield(self)
+                end
                 @instance ||= self
             end
 

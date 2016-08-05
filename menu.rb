@@ -3,21 +3,20 @@ class Menu
     class << self
 
         def main
+            puts '___________________________________________________'
             choose do |menu|
-              menu.prompt = "What we do? "
 
-              menu.choice("Moderate users") { moderateUsers } if Config::User.role == 'admin'
-              menu.choice("Show categories") { showCategories }
-              menu.choice("My settings") { mySettings }
-              menu.choice("Show info") { showInfo }
+              menu.choice("Moderate users") { moderateUsers; self.main } if Config::User.role == 'admin'
+              menu.choice("Show categories") { showCategories; self.main }
+              menu.choice("My settings") { mySettings; self.main }
+              menu.choice("Show info") { showInfo; self.main }
               menu.choice("Exit") { exit }
             end
-            @instance ||= self
         end
 
         def moderateUsers
             require_relative './users/main.rb'
-            #ModerateUsers.showMenu
+            ModerateUsers.new
         end
 
 
@@ -26,7 +25,7 @@ class Menu
         end
 
         def mySettings
-
+            require_relative './users/settings.rb'
         end
 
         private
@@ -34,15 +33,14 @@ class Menu
         def showInfo
             require 'sysinfo'
             sysinfo = SysInfo.new
-            puts ""
+            puts '___________________________________________________'
             p ">> Hello, #{sysinfo.user.capitalize}."
             p ">> Ruby -v #{sysinfo.ruby.join('.')}"
 
             p ">> Host is #{sysinfo.hostname}"
             p ">> Your local ip is #{sysinfo.ipaddress_internal}"
-            puts ""
+            puts '___________________________________________________'
         end
-
     end
 
 end

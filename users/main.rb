@@ -1,31 +1,33 @@
 class ModerateUsers
 
-    class << self
+    @@limit = 10
 
-        def new
+    def new.self
+        @instance ||= self
+    end
+
+    def initialize
+        choose do |menu|
+          menu.prompt = "What we do? "
+          menu.choice("Add user") { addUser }
+          menu.choice("Show users") { ShowUsers.new(0) }
+          menu.choice("Back") {  }
+        end
+    end
+
+    private
+
+    class AddUser
+
+    end
+
+    class ShowUsers
+
+        def new.self
             @instance ||= self
         end
 
-        private
-
-        def showMenu
-            choose do |menu|
-              menu.prompt = "What we do? "
-              menu.choice("Add user") { addUser }
-              menu.choice("Show users") { showUsers(0) }
-            end
-        end
-
-        def addUser
-        end
-
-        def showUsers(start)
-        end
-
-        def editUser(id)
-        end
-
-        def deleteUser(id)
+        def initialize(start)
         end
 
     end
